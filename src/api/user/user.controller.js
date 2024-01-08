@@ -1,3 +1,5 @@
+import handleError from '../../utils/handleError.js';
+
 export const getUserProfile = async (req, res) => {
 	try {
 		const user = req.user;

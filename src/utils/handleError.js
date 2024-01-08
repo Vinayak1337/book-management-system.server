@@ -1,10 +1,13 @@
+// @ts-check
+
 /**
- * 
- * @param {*} err 
- * @returns {{message: string, status: number, code: number, entity: object }}} 
+ *
+ * @param {*} err
+ * @returns {{message: string, status: number, code: number, entity: object }}}
  */
-export default function handleError(err)
-{
+export default function handleError(err) {
+	console.error(err);
+
 	if (err.name === 'ValidationError') {
 		return {
 			message: err.message,

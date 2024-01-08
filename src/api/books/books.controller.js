@@ -1,5 +1,8 @@
+// @ts-check
+
 import GridFS from '../../utils/bucket.js';
 import Books from './books.model.js';
+import handleError from '../../utils/handleError.js';
 
 export const getUserPublishedBooks = async (req, res) => {
 	try {
@@ -15,7 +18,7 @@ export const getUserPublishedBooks = async (req, res) => {
 	}
 };
 
-export const getAllPublishedBooks = async (_, res) => {
+export const getAllPublishedBooks = async (req, res) => {
 	try {
 		let { limit = 10, page = 1 } = req.query;
 
