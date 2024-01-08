@@ -8,7 +8,7 @@ const storage = new GridFsStorage({
 	file: (_, file) => {
 		const filename = `${md5(`${file.originalname}${Date.now()}`)}.${
 			file.mimetype.split('/')[1]
-		}}`;
+		}`;
 
 		return {
 			bucketName: 'thumbnails',

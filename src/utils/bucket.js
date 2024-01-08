@@ -15,7 +15,7 @@ const GridFS = {
 const connectGridFS = () => {
 	mongoose.connection.once('open', () => {
 		GridFS.Bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-			bucketName: 'book.thumbnail'
+			bucketName: 'thumbnails'
 		});
 
 		console.log(chalk.green('Connected to GridFS'));
