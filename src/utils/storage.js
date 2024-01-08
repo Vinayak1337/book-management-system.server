@@ -6,12 +6,12 @@ import config from './config.js';
 const storage = new GridFsStorage({
 	url: config.MONGO_URI,
 	file: (_, file) => {
-		const filename = `${md5(`${file.originalname}${Date.now()}`)}${
+		const filename = `${md5(`${file.originalname}${Date.now()}`)}.${
 			file.mimetype.split('/')[1]
 		}}`;
 
 		return {
-			bucketName: 'book.thumbnail',
+			bucketName: 'thumbnails',
 			filename
 		};
 	}
