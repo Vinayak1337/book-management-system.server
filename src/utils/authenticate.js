@@ -1,5 +1,6 @@
 import User from '../api/user/user.model.js';
 import { verifyToken } from './jwt.js';
+import handleError from '../utils/handleError.js';
 
 export default async function authenticate(req, res, next) {
 	try {
