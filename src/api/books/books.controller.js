@@ -136,13 +136,20 @@ export const getBookThumbnail = async (req, res) => {
 export const searchBooksByTitle = async (req, res) => {
 	try {
 		const { title } = req.query;
+		let { limit = 10, page = 1 } = req.query;
 
-		if (!title) return res.status(400).json({ message: 'Title is required.' });
+		limit = parseInt(limit);
+		page = parseInt(page);
+
+		if (isNaN(limit) || isNaN(page) || !title)
+			return res.status(400).json({ message: 'Invalid query parameters.' });
+
+		const skip = (page - 1) * limit;
 
 		const queryTitle = title.trim();
 		const queryWords = queryTitle.split(' ');
 
-		const books = await Books.aggregate([
+		const aggregation = await Books.aggregate([
 			{
 				$addFields: {
 					titleWords: { $split: ['$title', ' '] }
@@ -152,18 +159,30 @@ export const searchBooksByTitle = async (req, res) => {
 				$match: { title: { $regex: queryTitle, $options: 'i' } }
 			},
 			{
-				$addFields: {
-					matchScore: {
-						$size: { $setIntersection: ['$titleWords', queryWords] }
-					}
+				$facet: {
+					paginatedResults: [
+						{
+							$addFields: {
+								matchScore: {
+									$size: { $setIntersection: ['$titleWords', queryWords] }
+								}
+							}
+						},
+						{ $sort: { matchScore: -1, title: 1 } },
+						{ $skip: skip },
+						{ $limit: limit }
+					],
+					totalCount: [{ $count: 'count' }]
 				}
-			},
-			{
-				$sort: { matchScore: -1, title: 1 }
 			}
 		]).exec();
 
-		res.status(200).json(books);
+		const books = aggregation[0].paginatedResults;
+		const total = aggregation[0].totalCount[0]
+			? aggregation[0].totalCount[0].count
+			: 0;
+
+		res.status(200).json({ books, total });
 	} catch (error) {
 		const structuredError = handleError(error);
 		res.status(structuredError.status).json(structuredError);
