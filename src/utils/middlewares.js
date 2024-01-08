@@ -16,12 +16,13 @@ const swaggerConfig = JSON.parse(fs.readFileSync('./swagger.json', 'utf-8'));
 const initMiddlewares = app => {
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: true }));
-	app.use(
-		cors({
-			origin: config.ALLOWED_ORIGINS.split(',').map(origin => origin.trim()),
-			optionsSuccessStatus: 200
-		})
-	);
+	// app.use(
+	// 	cors({
+	// 		origin: config.ALLOWED_ORIGINS.split(',').map(origin => origin.trim()),
+	// 		optionsSuccessStatus: 200
+	// 	})
+	// );
+	app.use(cors());
 	app.use(morgan('dev'));
 	app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 	app.use('/api/books/:id/thumbnail', getBookThumbnail);
