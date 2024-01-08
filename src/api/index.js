@@ -4,15 +4,15 @@ import booksRouter from './books/books.router.js';
 import userRouter from './user/user.router.js';
 
 const routes = {
-	'/auth': {
+	'auth': {
 		router: authRouter,
 		middlewares: []
 	},
-	'/user': {
+	'user': {
 		router: userRouter,
 		middlewares: [authenticate]
 	},
-	'/books': {
+	'books': {
 		router: booksRouter,
 		middlewares: [authenticate]
 	}

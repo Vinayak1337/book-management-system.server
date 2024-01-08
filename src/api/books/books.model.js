@@ -1,6 +1,5 @@
 // @ts-check
 import mongoose from 'mongoose';
-import validator from 'validator';
 
 const { Schema, model, SchemaTypes } = mongoose;
 
@@ -16,8 +15,7 @@ const booksSchema = new Schema(
 		thumbnail: {
 			type: String,
 			required: [true, 'Thumbnail is required.'],
-			trim: true,
-			validate: [validator.isURL, 'Thumbnail must be a valid URL.']
+			trim: true
 		},
 		author: {
 			type: SchemaTypes.ObjectId,

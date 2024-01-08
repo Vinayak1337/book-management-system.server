@@ -9,7 +9,7 @@ import routes from '../api/index.js';
  */
 const initRoutes = app => {
 	for (const [path, { router, middlewares = [] }] of Object.entries(routes))
-		app.use(path, ...middlewares, router);
+		app.use(`/api/${path}`, ...middlewares, router);
 };
 
 export default initRoutes;

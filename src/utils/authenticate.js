@@ -20,6 +20,7 @@ export default async function authenticate(req, res, next) {
 		req.user = user;
 		next();
 	} catch (error) {
-		res.status(500).json(handleError(error));
+		const structuredError = handleError(error);
+		res.status(structuredError.status).json(structuredError);
 	}
 }

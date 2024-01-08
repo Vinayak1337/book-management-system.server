@@ -10,7 +10,8 @@ export const getUserPublishedBooks = async (req, res) => {
 
 		res.status(200).json(books);
 	} catch (error) {
-		res.status(500).json(handleError(error));
+		const structuredError = handleError(error);
+		res.status(structuredError.status).json(structuredError);
 	}
 };
 
@@ -36,7 +37,8 @@ export const getAllPublishedBooks = async (_, res) => {
 
 		res.status(200).json({ books, total });
 	} catch (error) {
-		res.status(500).json(handleError(error));
+		const structuredError = handleError(error);
+		res.status(structuredError.status).json(structuredError);
 	}
 };
 
@@ -57,7 +59,8 @@ export const unpublishBookById = async (req, res) => {
 
 		res.status(200).json({ message: 'Book unpublished successfully.' });
 	} catch (error) {
-		res.status(500).json(handleError(error));
+		const structuredError = handleError(error);
+		res.status(structuredError.status).json(structuredError);
 	}
 };
 
@@ -78,7 +81,8 @@ export const publishBookById = async (req, res) => {
 
 		res.status(200).json({ message: 'Book published successfully.' });
 	} catch (error) {
-		res.status(500).json(handleError(error));
+		const structuredError = handleError(error);
+		res.status(structuredError.status).json(structuredError);
 	}
 };
 
@@ -98,7 +102,8 @@ export const createBook = async (req, res) => {
 
 		res.status(201).json(book);
 	} catch (error) {
-		res.status(500).json(handleError(error));
+		const structuredError = handleError(error);
+		res.status(structuredError.status).json(structuredError);
 	}
 };
 
@@ -123,7 +128,8 @@ export const getBookThumbnail = async (req, res) => {
 		const stream = GridFS.Bucket.openDownloadStream(thumbnail[0]._id);
 		stream.pipe(res);
 	} catch (error) {
-		res.status(500).json(handleError(error));
+		const structuredError = handleError(error);
+		res.status(structuredError.status).json(structuredError);
 	}
 };
 
@@ -159,6 +165,7 @@ export const searchBooksByTitle = async (req, res) => {
 
 		res.status(200).json(books);
 	} catch (error) {
-		res.status(500).json(handleError(error));
+		const structuredError = handleError(error);
+		res.status(structuredError.status).json(structuredError);
 	}
 };

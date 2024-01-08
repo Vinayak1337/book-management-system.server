@@ -10,9 +10,10 @@ export const register = async (req, res) => {
 
 		const token = createToken(user._id);
 
-		res.status(200).json({ token });
+		res.status(201).json({ token, userId: user._id });
 	} catch (error) {
-		res.status(500).json(handleError(error));
+		const structuredError = handleError(error);
+		res.status(structuredError.status).json(structuredError);
 	}
 };
 
@@ -36,8 +37,9 @@ export const login = async (req, res) => {
 
 		const token = createToken(user._id);
 
-		res.status(200).json({ token });
+		res.status(200).json({ token, userId: user._id });
 	} catch (error) {
-		res.status(500).json(handleError(error));
+		const structuredError = handleError(error);
+		res.status(structuredError.status).json(structuredError);
 	}
 };
