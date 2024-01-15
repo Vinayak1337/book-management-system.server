@@ -7,7 +7,7 @@ import handleError from '../../utils/handleError.js';
 export const getUserPublishedBooks = async (req, res) => {
 	try {
 		const user = req.user;
-		const books = await Books.find({ user: user._id, published: true })
+		const books = await Books.find({ author: user._id, published: true })
 			.lean()
 			.exec();
 
